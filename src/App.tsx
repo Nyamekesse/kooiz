@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { QuizAPI } from './api/quiz-api';
 import bubbleImg from './assets/bubble.png';
 import logoImg from './assets/logo.png';
-import PlayQuiz from './features/PlayQuiz';
+import PlayQuiz from './features/PlayQuiz/PlayQuiz';
 import SetQuestionCategory from './features/SetQuestionCategory';
 import SetQuestionQty from './features/SetQuestionQty';
 import SetQuizDifficulty from './features/SetQuizDifficulty';
