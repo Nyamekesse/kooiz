@@ -4,6 +4,7 @@ import { QuizAPI } from './api/quiz-api';
 import bubbleImg from './assets/bubble.png';
 import logoImg from './assets/logo.png';
 import PlayQuiz from './features/PlayQuiz/PlayQuiz';
+import Score from './features/Score';
 import SetQuestionCategory from './features/SetQuestionCategory';
 import SetQuestionQty from './features/SetQuestionQty';
 import SetQuizDifficulty from './features/SetQuizDifficulty';
@@ -26,6 +27,7 @@ function App() {
     type: QuizType.Multiple,
   });
   const [quiz, setQuiz] = useState<QuizItem[]>([]);
+  const [history, setHistory] = useState<boolean[]>([]);
 
   const [categories, setCategories] = useState<QuizCategory[]>([]);
   useEffect(() => {
@@ -82,9 +84,24 @@ function App() {
           />
         );
       case Step.Play:
-        return <PlayQuiz quiz={quiz} />;
+        return (
+          <PlayQuiz
+            quiz={quiz}
+            onFinished={(history_: boolean[]) => {
+              setHistory(history_);
+              setStep(Step.Score);
+            }}
+          />
+        );
       case Step.Score:
-        return <></>;
+        return (
+          <Score
+            history={history}
+            onNext={() => {
+              setStep(Step.SetQuestionQty);
+            }}
+          />
+        );
       default:
         return null;
     }
