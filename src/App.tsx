@@ -5,6 +5,7 @@ import bubbleImg from './assets/bubble.png';
 import logoImg from './assets/logo.png';
 import SetQuestionCategory from './features/SetQuestionCategory';
 import SetQuestionQty from './features/SetQuestionQty';
+import SetQuizDifficulty from './features/SetQuizDifficulty';
 import { FetchQuizParams, QuizCategory, QuizDifficulty, QuizType } from './types/quiz-type';
 
 enum Step {
@@ -17,7 +18,12 @@ enum Step {
 
 function App() {
   const [step, setStep] = useState<Step>(Step.SetQuestionQty);
-  const [quizParams, setQuizParams] = useState<FetchQuizParams>({ amount: 0, category: '', difficulty: QuizDifficulty.Mixed, type: QuizType.Mixed });
+  const [quizParams, setQuizParams] = useState<FetchQuizParams>({
+    amount: 0,
+    category: '',
+    difficulty: QuizDifficulty.Mixed,
+    type: QuizType.Multiple,
+  });
   console.log(quizParams);
 
   const [categories, setCategories] = useState<QuizCategory[]>([]);
@@ -58,7 +64,14 @@ function App() {
           />
         );
       case Step.SetQuestionDifficulty:
-        return <></>;
+        return (
+          <SetQuizDifficulty
+            onClickNext={(difficulty: QuizDifficulty) => {
+              setQuizParams({ ...quizParams, difficulty });
+              setStep(Step.Play);
+            }}
+          />
+        );
       case Step.Play:
         return <></>;
       case Step.Score:
