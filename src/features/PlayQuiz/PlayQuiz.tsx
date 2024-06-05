@@ -9,6 +9,7 @@ import Timer from './Timer';
 
 interface Props {
   quiz: QuizItem[];
+  onFinished: (history: boolean[]) => void;
 }
 
 const PlayQuiz = (p: Props) => {
@@ -87,8 +88,12 @@ const PlayQuiz = (p: Props) => {
         style={{ marginTop: 80, height: 150 }}
         animationData={questionStatus === 'unanswered' ? null : questionStatus === 'valid' ? validAnim : inValidAnim}
         onComplete={() => {
-          setQuestionStatus('unanswered');
-          setCurrentQuizItemIndex(currentQuizItemIndex + 1);
+          if (currentQuizItemIndex < p.quiz.length - 1) {
+            setQuestionStatus('unanswered');
+            setCurrentQuizItemIndex(currentQuizItemIndex + 1);
+          } else {
+            p.onFinished(history);
+          }
         }}
       />
     </Flex>
